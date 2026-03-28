@@ -1,0 +1,70 @@
+<div class="resume-page">
+    <div class="page-header">
+        <h2>My Resumes</h2>
+        <p>Upload and manage your resumes, get AI feedback</p>
+    </div>
+
+    <!-- Upload Area -->
+    <mat-card class="upload-card">
+        <mat-card-content>
+            <div class="upload-zone" (click)="fileInput.click()">
+                <mat-icon>cloud_upload</mat-icon>
+                <h3>Upload Resume</h3>
+                <p>Click to upload PDF file (max 5MB)</p>
+                <button mat-raised-button color="primary" [disabled]="uploading">
+                    <mat-spinner *ngIf="uploading" diameter="18"></mat-spinner>
+                    <span *ngIf="!uploading">Choose File</span>
+                </button>
+            </div>
+            <input #fileInput type="file" accept=".pdf" hidden (change)="onFileSelected($event)">
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Resume List -->
+    <div *ngIf="loading" class="loading-center"><mat-spinner></mat-spinner></div>
+
+    <div class="resume-list" *ngIf="!loading">
+        <mat-card *ngFor="let resume of resumes" class="resume-card">
+            <div class="resume-info">
+                <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+                <div>
+                    <h4>{{ resume.fileName }}</h4>
+                    <small>Uploaded {{ resume.uploadedAt | date: 'dd MMM yyyy' }}</small>
+                    <span *ngIf="resume.isPrimary" class="primary-badge">⭐ Primary</span>
+                </div>
+            </div>
+            <div class="resume-actions">
+                <a mat-icon-button matTooltip="View" [href]="resume.fileUrl" target="_blank" rel="noopener">
+                    <mat-icon>open_in_new</mat-icon>
+                </a>
+                <button mat-icon-button matTooltip="AI Review" (click)="reviewResume(resume)"
+                    [disabled]="reviewingId === resume.id">
+                    <mat-spinner *ngIf="reviewingId === resume.id" diameter="20"></mat-spinner>
+                    <mat-icon *ngIf="reviewingId !== resume.id">psychology</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Set as Primary" *ngIf="!resume.isPrimary"
+                    (click)="setPrimary(resume.id)">
+                    <mat-icon>star_border</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteResume(resume.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+
+        <div *ngIf="resumes.length === 0" class="empty-state">
+            <mat-icon>description</mat-icon>
+            <p>No resumes uploaded yet. Upload your first resume!</p>
+        </div>
+    </div>
+
+    <!-- AI Review Result -->
+    <mat-card *ngIf="reviewText" class="review-card">
+        <mat-card-header>
+            <mat-card-title>AI Resume Review — {{ selectedResume?.fileName }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <pre class="review-text">{{ reviewText }}</pre>
+        </mat-card-content>
+    </mat-card>
+</div>

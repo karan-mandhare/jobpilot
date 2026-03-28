@@ -1,0 +1,33 @@
+# ─── NEVER PUSH THESE ───────────────────────
+.env
+.env.local
+.env.production
+*.env
+application-local.yml
+application-secrets.yml
+secrets.properties
+
+# ─── Backend ────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.idea/
+backend/*.iml
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# ─── Frontend ───────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.env
+
+# ─── OS files ───────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── IDE ─────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo

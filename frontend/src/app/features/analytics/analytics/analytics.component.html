@@ -1,0 +1,79 @@
+<div class="analytics-page">
+  <div class="page-header">
+    <h2>Analytics</h2>
+    <p>Insights into your job search journey</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-center"><mat-spinner></mat-spinner></div>
+
+  <ng-container *ngIf="!loading && analytics">
+    <!-- KPI Row -->
+    <div class="kpi-row">
+      <mat-card class="kpi-card">
+        <span class="kpi-value">{{ analytics.totalApplications }}</span>
+        <span class="kpi-label">Total Applied</span>
+      </mat-card>
+      <mat-card class="kpi-card green">
+        <span class="kpi-value">{{ analytics.offersReceived }}</span>
+        <span class="kpi-label">Offers</span>
+      </mat-card>
+      <mat-card class="kpi-card purple">
+        <span class="kpi-value">{{ analytics.interviewsScheduled }}</span>
+        <span class="kpi-label">Interviews</span>
+      </mat-card>
+      <mat-card class="kpi-card orange">
+        <span class="kpi-value">{{ analytics.responseRate }}%</span>
+        <span class="kpi-label">Response Rate</span>
+      </mat-card>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <!-- Monthly Bar Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Monthly Applications</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="monthlyChartData"
+            [options]="barOptions"
+            type="bar">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Status Doughnut -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Status Breakdown</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="statusChartData"
+            [options]="doughnutOptions"
+            type="doughnut">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Source Breakdown -->
+    <mat-card class="source-card">
+      <mat-card-header>
+        <mat-card-title>Applications by Source</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let entry of getSourceEntries()" class="source-row">
+          <span class="source-name">{{ entry[0] }}</span>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="getSourcePercent(entry[1])"
+            class="source-bar">
+          </mat-progress-bar>
+          <span class="source-count">{{ entry[1] }} ({{ getSourcePercent(entry[1]) }}%)</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>

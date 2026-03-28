@@ -1,0 +1,205 @@
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px 0;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -0.3px;
+  }
+
+  .subtitle {
+    color: var(--text-2);
+    margin: 4px 0 0;
+    font-size: 0.875rem;
+  }
+}
+
+/* ─── Detail Grid ────────────────────────────────────────────── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 16px 0;
+}
+
+.detail-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--surface-2);
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+
+  mat-icon {
+    color: var(--primary);
+    margin-top: 1px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  span, a {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-1);
+    display: block;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.notes-section {
+  padding: 12px 0 16px;
+
+  h4 {
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    color: var(--text-2);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background: var(--surface-2);
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+  }
+}
+
+/* ─── Interview Rounds ───────────────────────────────────────── */
+.rounds-section { padding: 16px 0; }
+
+.round-card {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.15s;
+
+  &:hover { box-shadow: var(--shadow-sm); }
+
+  .round-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+
+    .round-num {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.875rem;
+    }
+
+    .round-type {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 2px 9px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .result-badge {
+      padding: 2px 9px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+
+      &.result-passed  { background: #d1fae5; color: #065f46; }
+      &.result-failed  { background: #fee2e2; color: #991b1b; }
+      &.result-pending { background: #fef3c7; color: #b45309; }
+    }
+
+    button { margin-left: auto; }
+  }
+
+  .round-feedback {
+    margin: 4px 0;
+    color: var(--text-2);
+    font-size: 0.8375rem;
+    line-height: 1.5;
+  }
+
+  small { color: var(--text-3); font-size: 0.78rem; }
+}
+
+.empty-rounds {
+  text-align: center;
+  color: var(--text-3);
+  padding: 28px;
+  font-size: 0.875rem;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+}
+
+.round-form {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+
+.form-row { display: flex; gap: 14px; }
+.half { flex: 1; }
+.full { width: 100%; }
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.add-round-btn { margin-top: 10px; }
+
+/* Status badge (dialog header) */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+
+  &.status-applied   { background: #dbeafe; color: #1d4ed8; }
+  &.status-screening { background: #fef3c7; color: #b45309; }
+  &.status-interview { background: #ede9fe; color: #6d28d9; }
+  &.status-offer     { background: #d1fae5; color: #065f46; }
+  &.status-rejected  { background: #fee2e2; color: #991b1b; }
+  &.status-accepted  { background: #d1fae5; color: #065f46; }
+}

@@ -1,0 +1,14 @@
+<aside class="sidebar" [class.sidebar-closed]="!isOpen">
+  <nav>
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      class="nav-item"
+      [matTooltip]="!isOpen ? item.label : ''"
+      matTooltipPosition="right">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span class="nav-label" *ngIf="isOpen">{{ item.label }}</span>
+    </a>
+  </nav>
+</aside>

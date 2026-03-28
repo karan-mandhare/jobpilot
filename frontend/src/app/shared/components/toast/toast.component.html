@@ -1,0 +1,16 @@
+<div class="toast-container">
+  <div
+    *ngFor="let toast of toastService.toasts$ | async; trackBy: trackById"
+    class="toast"
+    [ngClass]="'toast-' + toast.type">
+    <mat-icon class="toast-icon">
+      {{ toast.type === 'success' ? 'check_circle'
+       : toast.type === 'error' ? 'error'
+       : toast.type === 'warning' ? 'warning' : 'info' }}
+    </mat-icon>
+    <span>{{ toast.message }}</span>
+    <button mat-icon-button (click)="toastService.remove(toast.id)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

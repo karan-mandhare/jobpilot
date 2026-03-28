@@ -1,0 +1,116 @@
+<div class="ai-prep-page">
+  <div class="page-header">
+    <h2>AI Interview Prep</h2>
+    <p>Powered by Claude AI — generate questions, cover letters and more</p>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="activeTab">
+
+    <!-- Interview Questions Tab -->
+    <mat-tab label="Interview Questions">
+      <div class="tab-content">
+        <mat-card class="form-card">
+          <mat-card-content>
+            <h3>Generate Interview Questions</h3>
+
+            <!-- Quick role chips -->
+            <div class="role-chips">
+              <span class="chips-label">Quick fill:</span>
+              <mat-chip-list>
+                <mat-chip *ngFor="let r of popularRoles" (click)="fillRole(r)">{{ r }}</mat-chip>
+              </mat-chip-list>
+            </div>
+
+            <form [formGroup]="interviewForm">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half">
+                  <mat-label>Job Role *</mat-label>
+                  <input matInput formControlName="jobRole" placeholder="e.g. Java Backend Developer">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="half">
+                  <mat-label>Experience Level</mat-label>
+                  <mat-select formControlName="experienceLevel">
+                    <mat-option *ngFor="let e of experienceLevels" [value]="e">{{ e }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <button mat-raised-button color="primary"
+                (click)="generateQuestions()"
+                [disabled]="interviewForm.invalid || loadingInterview">
+                <mat-icon>psychology</mat-icon>
+                {{ loadingInterview ? 'Generating...' : 'Generate Questions' }}
+                <mat-spinner *ngIf="loadingInterview" diameter="18"></mat-spinner>
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Result -->
+        <mat-card *ngIf="interviewResult" class="result-card">
+          <mat-card-header>
+            <mat-card-title>Generated Questions</mat-card-title>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="copyToClipboard(interviewResult)"
+              matTooltip="Copy to clipboard">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <pre class="result-text">{{ interviewResult }}</pre>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Cover Letter Tab -->
+    <mat-tab label="Cover Letter">
+      <div class="tab-content">
+        <mat-card class="form-card">
+          <mat-card-content>
+            <h3>Generate Cover Letter</h3>
+            <form [formGroup]="coverForm">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half">
+                  <mat-label>Job Role *</mat-label>
+                  <input matInput formControlName="jobRole">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="half">
+                  <mat-label>Company Name *</mat-label>
+                  <input matInput formControlName="companyName">
+                </mat-form-field>
+              </div>
+              <mat-form-field appearance="outline" class="full">
+                <mat-label>Your Background Summary *</mat-label>
+                <textarea matInput formControlName="resumeSummary" rows="4"
+                  placeholder="e.g. 1.5 years experience in Spring Boot, built REST APIs, worked on microservices...">
+                </textarea>
+              </mat-form-field>
+              <button mat-raised-button color="primary"
+                (click)="generateCoverLetter()"
+                [disabled]="coverForm.invalid || loadingCover">
+                <mat-icon>description</mat-icon>
+                {{ loadingCover ? 'Writing...' : 'Generate Cover Letter' }}
+                <mat-spinner *ngIf="loadingCover" diameter="18"></mat-spinner>
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card *ngIf="coverResult" class="result-card">
+          <mat-card-header>
+            <mat-card-title>Cover Letter</mat-card-title>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="copyToClipboard(coverResult)"
+              matTooltip="Copy to clipboard">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <pre class="result-text">{{ coverResult }}</pre>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

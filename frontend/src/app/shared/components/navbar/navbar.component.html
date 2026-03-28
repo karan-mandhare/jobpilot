@@ -1,0 +1,52 @@
+<mat-toolbar class="navbar">
+  <button mat-icon-button (click)="onToggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="brand">
+    <mat-icon class="brand-icon">flight_takeoff</mat-icon>
+    JobPilot
+  </span>
+
+  <span class="spacer"></span>
+
+  <!-- Notifications -->
+  <button mat-icon-button [matMenuTriggerFor]="notifMenu">
+    <mat-icon [matBadge]="unreadCount || null" matBadgeColor="warn">
+      notifications
+    </mat-icon>
+  </button>
+
+  <mat-menu #notifMenu="matMenu" class="notif-menu">
+    <div class="notif-header">
+      <span>Notifications</span>
+      <button mat-button color="primary" (click)="markAllRead()">Mark all read</button>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngFor="let n of notifications" class="notif-item" [class.unread]="!n.isRead">
+      <mat-icon class="notif-icon" [color]="n.type === 'REMINDER' ? 'warn' : 'primary'">
+        {{ n.type === 'REMINDER' ? 'alarm' : n.type === 'INFO' ? 'info' : 'settings' }}
+      </mat-icon>
+      <span class="notif-msg">{{ n.message }}</span>
+    </div>
+    <div *ngIf="notifications.length === 0" class="notif-empty">
+      No notifications
+    </div>
+  </mat-menu>
+
+  <!-- User menu -->
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <div class="user-info-menu">
+      <strong>{{ currentUser?.name }}</strong>
+      <small>{{ currentUser?.email }}</small>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>

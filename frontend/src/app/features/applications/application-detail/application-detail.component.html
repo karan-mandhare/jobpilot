@@ -1,0 +1,123 @@
+<div class="detail-header">
+  <div>
+    <h2 mat-dialog-title>{{ app.companyName }}</h2>
+    <p class="subtitle">{{ app.jobRole }}</p>
+  </div>
+  <span class="status-badge" [ngClass]="app.status | statusColor">{{ app.status }}</span>
+</div>
+
+<mat-dialog-content>
+  <mat-tab-group>
+    <!-- Details Tab -->
+    <mat-tab label="Details">
+      <div class="detail-grid">
+        <div class="detail-item" *ngIf="app.location">
+          <mat-icon>place</mat-icon>
+          <div><label>Location</label><span>{{ app.location }}</span></div>
+        </div>
+        <div class="detail-item" *ngIf="app.salaryRange">
+          <mat-icon>currency_rupee</mat-icon>
+          <div><label>Salary</label><span>{{ app.salaryRange }}</span></div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>calendar_today</mat-icon>
+          <div><label>Applied</label><span>{{ app.appliedDate | date: 'dd MMM yyyy' }}</span></div>
+        </div>
+        <div class="detail-item" *ngIf="app.source">
+          <mat-icon>source</mat-icon>
+          <div><label>Source</label><span>{{ app.source }}</span></div>
+        </div>
+        <div class="detail-item" *ngIf="app.jobUrl">
+          <mat-icon>link</mat-icon>
+          <div>
+            <label>Job URL</label>
+            <a [href]="app.jobUrl" target="_blank">View Job Posting</a>
+          </div>
+        </div>
+      </div>
+      <mat-divider *ngIf="app.notes"></mat-divider>
+      <div class="notes-section" *ngIf="app.notes">
+        <h4>Notes</h4>
+        <p>{{ app.notes }}</p>
+      </div>
+    </mat-tab>
+
+    <!-- Interview Rounds Tab -->
+    <mat-tab [label]="'Rounds (' + rounds.length + ')'">
+      <div class="rounds-section">
+        <div *ngFor="let r of rounds" class="round-card">
+          <div class="round-header">
+            <span class="round-num">Round {{ r.roundNumber }}</span>
+            <span class="round-type">{{ r.roundType }}</span>
+            <span class="result-badge" [ngClass]="'result-' + r.result.toLowerCase()">
+              {{ r.result }}
+            </span>
+            <button mat-icon-button color="warn" (click)="deleteRound(r.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <p *ngIf="r.feedback" class="round-feedback">{{ r.feedback }}</p>
+          <small *ngIf="r.scheduledAt">
+            Scheduled: {{ r.scheduledAt | date: 'dd MMM yyyy, hh:mm a' }}
+          </small>
+        </div>
+
+        <div *ngIf="rounds.length === 0 && !showRoundForm" class="empty-rounds">
+          No interview rounds yet
+        </div>
+
+        <!-- Add Round Form -->
+        <div *ngIf="showRoundForm" class="round-form">
+          <form [formGroup]="roundForm">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>Round #</mat-label>
+                <input matInput type="number" formControlName="roundNumber">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="roundType">
+                  <mat-option *ngFor="let t of roundTypes" [value]="t">{{ t }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>Result</mat-label>
+                <mat-select formControlName="result">
+                  <mat-option *ngFor="let r of results" [value]="r">{{ r }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="half">
+                <mat-label>Interviewer</mat-label>
+                <input matInput formControlName="interviewer">
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Feedback</mat-label>
+              <textarea matInput formControlName="feedback" rows="2"></textarea>
+            </mat-form-field>
+            <div class="form-actions">
+              <button mat-button (click)="showRoundForm = false">Cancel</button>
+              <button mat-raised-button color="primary" (click)="addRound()" [disabled]="loading">
+                Save Round
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <button mat-stroked-button color="primary" *ngIf="!showRoundForm"
+          (click)="showRoundForm = true" class="add-round-btn">
+          <mat-icon>add</mat-icon> Add Round
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="deleteApp()">
+    <mat-icon>delete</mat-icon> Delete
+  </button>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

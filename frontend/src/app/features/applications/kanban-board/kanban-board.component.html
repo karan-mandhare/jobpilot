@@ -1,0 +1,76 @@
+<div class="kanban-page">
+  <div class="page-header">
+    <div>
+      <h2>Applications Board</h2>
+      <p>Drag cards to update status</p>
+    </div>
+    <div class="header-actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Company or role...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="openForm()">
+        <mat-icon>add</mat-icon> New Application
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="kanban-board" *ngIf="!loading">
+    <div *ngFor="let col of columns" class="kanban-column">
+      <!-- Column Header -->
+      <div class="column-header" [ngClass]="col.bgClass">
+        <span class="col-title" [ngClass]="col.colorClass">{{ col.label }}</span>
+        <span class="col-count">{{ col.items.length }}</span>
+      </div>
+
+      <!-- Drop List -->
+      <div
+        class="drop-list"
+        cdkDropList
+        [id]="col.status"
+        [cdkDropListData]="col.items"
+        [cdkDropListConnectedTo]="columnIds"
+        (cdkDropListDropped)="onDrop($event)">
+
+        <!-- Application Card -->
+        <mat-card
+          *ngFor="let app of col.items"
+          class="app-card"
+          cdkDrag
+          (click)="openDetail(app)">
+          <div class="card-drag-handle" cdkDragHandle>
+            <mat-icon>drag_indicator</mat-icon>
+          </div>
+          <h4 class="card-company">{{ app.companyName }}</h4>
+          <p class="card-role">{{ app.jobRole }}</p>
+          <div class="card-meta">
+            <span *ngIf="app.location">
+              <mat-icon>place</mat-icon> {{ app.location }}
+            </span>
+            <span *ngIf="app.salaryRange">
+              <mat-icon>currency_rupee</mat-icon> {{ app.salaryRange }}
+            </span>
+          </div>
+          <div class="card-footer">
+            <small>{{ app.appliedDate | date: 'dd MMM yyyy' }}</small>
+            <span class="source-chip" *ngIf="app.source">{{ app.source }}</span>
+          </div>
+          <button mat-icon-button class="edit-btn" (click)="openForm(app); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card>
+
+        <!-- Empty Column State -->
+        <div class="empty-col" *ngIf="col.items.length === 0">
+          <mat-icon>inbox</mat-icon>
+          <span>Drop here</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

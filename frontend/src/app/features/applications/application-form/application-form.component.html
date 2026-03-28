@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Application' : 'New Application' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="app-form">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Company Name *</mat-label>
+        <input matInput formControlName="companyName">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Job Role *</mat-label>
+        <input matInput formControlName="jobRole">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" placeholder="Bangalore">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Salary Range</mat-label>
+        <input matInput formControlName="salaryRange" placeholder="₹10L - ₹15L">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Job URL</mat-label>
+      <input matInput formControlName="jobUrl" placeholder="https://...">
+      <mat-icon matSuffix>link</mat-icon>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Source</mat-label>
+        <mat-select formControlName="source">
+          <mat-option *ngFor="let s of sources" [value]="s">{{ s }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Applied Date *</mat-label>
+        <input matInput type="date" formControlName="appliedDate">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Follow-up Date</mat-label>
+        <input matInput type="date" formControlName="followUpDate">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Job Description</mat-label>
+      <textarea matInput formControlName="jobDescription" rows="4"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary"
+    (click)="submit()" [disabled]="form.invalid || loading">
+    <mat-spinner *ngIf="loading" diameter="18"></mat-spinner>
+    <span *ngIf="!loading">{{ isEdit ? 'Update' : 'Add Application' }}</span>
+  </button>
+</mat-dialog-actions>

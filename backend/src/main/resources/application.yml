@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: jobpilot
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/jobpilot}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400000
+
+  ai:
+    api-key: ${OPENROUTER_API_KEY}
+    api-url: https://openrouter.ai/api/v1/chat/completions
+    model: stepfun/step-3.5-flash:free
+
+  cloudinary:
+    cloud-name: ${CLOUDINARY_CLOUD_NAME}
+    api-key: ${CLOUDINARY_API_KEY}
+    api-secret: ${CLOUDINARY_API_SECRET}
+
+  frontend-url: ${FRONTEND_URL:http://localhost:4200}

@@ -1,0 +1,106 @@
+<div class="dashboard">
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h2>Welcome back, {{ firstName }} 👋</h2>
+      <p>Here's your job search overview</p>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/applications">
+      <mat-icon>add</mat-icon> Add Application
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stats-grid">
+    <mat-card *ngFor="let card of statCards" class="stat-card"
+      [style.border-left-color]="card.color">
+      <mat-card-content>
+        <div class="stat-content">
+          <div>
+            <p class="stat-label">{{ card.label }}</p>
+            <h3 class="stat-value">
+              {{ getStatValue(card.key) }}{{ card.suffix || '' }}
+            </h3>
+          </div>
+          <div class="stat-icon" [style.background]="card.color + '20'">
+            <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Recent Applications -->
+  <mat-card class="recent-card">
+    <mat-card-header>
+      <mat-card-title>Recent Applications</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-button color="primary" routerLink="/applications">View All</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-center">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      <table mat-table [dataSource]="recentApps" *ngIf="!loading" class="full-width">
+        <ng-container matColumnDef="company">
+          <th mat-header-cell *matHeaderCellDef>Company</th>
+          <td mat-cell *matCellDef="let app">
+            <strong>{{ app.companyName }}</strong>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let app">{{ app.jobRole }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="status-badge" [ngClass]="app.status | statusColor">
+              {{ app.status }}
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Applied</th>
+          <td mat-cell *matCellDef="let app">{{ app.appliedDate | date: 'dd MMM' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['company','role','status','date']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['company','role','status','date']"
+            class="clickable-row"
+            [routerLink]="['/applications']"></tr>
+      </table>
+
+      <div *ngIf="!loading && recentApps.length === 0" class="empty-state">
+        <mat-icon>inbox</mat-icon>
+        <p>No applications yet. Start tracking your job search!</p>
+        <button mat-raised-button color="primary" routerLink="/applications">
+          Add First Application
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h3>Quick Actions</h3>
+    <div class="actions-grid">
+      <mat-card class="action-card" routerLink="/applications">
+        <mat-icon color="primary">view_kanban</mat-icon>
+        <span>Kanban Board</span>
+      </mat-card>
+      <mat-card class="action-card" routerLink="/resume">
+        <mat-icon color="accent">description</mat-icon>
+        <span>Upload Resume</span>
+      </mat-card>
+      <mat-card class="action-card" routerLink="/ai-prep">
+        <mat-icon style="color: #7b1fa2">psychology</mat-icon>
+        <span>AI Interview Prep</span>
+      </mat-card>
+      <mat-card class="action-card" routerLink="/analytics">
+        <mat-icon style="color: #e65100">bar_chart</mat-icon>
+        <span>View Analytics</span>
+      </mat-card>
+    </div>
+  </div>
+</div>
