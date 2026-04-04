@@ -10,5 +10,19 @@
       <mat-icon>{{ item.icon }}</mat-icon>
       <span class="nav-label" *ngIf="isOpen">{{ item.label }}</span>
     </a>
+
+    <!-- Admin section — only visible to admins -->
+    <ng-container *ngIf="authService.isAdmin()">
+      <div class="nav-section-label" *ngIf="isOpen">Admin</div>
+      <a
+        routerLink="/admin"
+        routerLinkActive="active"
+        class="nav-item admin-nav"
+        [matTooltip]="!isOpen ? 'Admin Dashboard' : ''"
+        matTooltipPosition="right">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span class="nav-label" *ngIf="isOpen">Admin Dashboard</span>
+      </a>
+    </ng-container>
   </nav>
 </aside>

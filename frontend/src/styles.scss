@@ -120,6 +120,16 @@ body {
   flex-direction: column !important;
   max-height: 90vh !important;
   background: var(--surface) !important;
+
+  /* Make the component host a flex column so mat-dialog-title/content/actions
+     participate in the layout and mat-dialog-content can scroll */
+  > * {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
 }
 
 /*

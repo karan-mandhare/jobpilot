@@ -1,0 +1,108 @@
+<div class="admin-dashboard">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <div class="admin-badge">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Admin Panel</span>
+      </div>
+      <h2>Welcome, {{ firstName }}</h2>
+      <p>Platform-wide overview and user management</p>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stats-grid" *ngIf="!statsError">
+    <div *ngIf="loading" class="loading-center">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    <ng-container *ngIf="!loading">
+      <mat-card *ngFor="let card of statCards" class="stat-card"
+        [style.border-left-color]="card.color">
+        <mat-card-content>
+          <div class="stat-content">
+            <div>
+              <p class="stat-label">{{ card.label }}</p>
+              <h3 class="stat-value">{{ getStatValue(card.key) }}</h3>
+            </div>
+            <div class="stat-icon" [style.background]="card.color + '20'">
+              <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </div>
+
+  <div *ngIf="statsError" class="error-banner">
+    <mat-icon>warning</mat-icon>
+    <span>Could not load platform stats. Ensure the admin API is available.</span>
+  </div>
+
+  <!-- Users Table -->
+  <mat-card class="users-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>people</mat-icon>
+        Registered Users
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="usersLoading" class="loading-center">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="usersError && !usersLoading" class="error-banner" style="margin-top:16px">
+        <mat-icon>warning</mat-icon>
+        <span>Could not load users. Ensure the admin API is available.</span>
+      </div>
+
+      <table mat-table [dataSource]="users" *ngIf="!usersLoading && !usersError" class="full-width">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let user">
+            <div class="user-cell">
+              <div class="avatar">{{ user.name.charAt(0).toUpperCase() }}</div>
+              <strong>{{ user.name }}</strong>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let user">
+            <span class="role-badge" [class.admin]="user.role === 'ADMIN'">
+              {{ user.role }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalApplications">
+          <th mat-header-cell *matHeaderCellDef>Applications</th>
+          <td mat-cell *matCellDef="let user">{{ user.totalApplications }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Joined</th>
+          <td mat-cell *matCellDef="let user">{{ user.createdAt | date: 'dd MMM yyyy' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div *ngIf="!usersLoading && !usersError && users.length === 0" class="empty-state">
+        <mat-icon>group_off</mat-icon>
+        <p>No users found.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

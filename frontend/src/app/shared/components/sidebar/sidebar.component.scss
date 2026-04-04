@@ -13,6 +13,15 @@
   }
 }
 
+.nav-section-label {
+  padding: 14px 16px 4px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--text-3);
+}
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -48,5 +57,14 @@
     font-weight: 600;
 
     mat-icon { color: var(--primary); }
+  }
+
+  &.admin-nav {
+    margin-top: 2px;
+    border: 1px dashed var(--primary-mid);
+
+    &:hover, &.active {
+      border-color: var(--primary);
+    }
   }
 }

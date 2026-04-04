@@ -28,8 +28,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    username: karan.mandhare.qnopy@gmail.com
+    password: "vnevlsprwqwialmt"
     properties:
       mail:
         smtp:
@@ -39,17 +39,17 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: 8e3b1c9f4d2a7e6b5c0f9a8d7e6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8
     expiration: 86400000
 
   ai:
-    api-key: ${OPENROUTER_API_KEY}
+    api-key: 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
     api-url: https://openrouter.ai/api/v1/chat/completions
     model: stepfun/step-3.5-flash:free
 
   cloudinary:
-    cloud-name: ${CLOUDINARY_CLOUD_NAME}
-    api-key: ${CLOUDINARY_API_KEY}
-    api-secret: ${CLOUDINARY_API_SECRET}
+    cloud-name: ddosofdcr
+    api-key: 546921326283166
+    api-secret: 3UC0qm1K1YUcemW8KRduH40TCdA
 
   frontend-url: ${FRONTEND_URL:http://localhost:4200}

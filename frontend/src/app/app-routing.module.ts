@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guard/auth.guard';
+import { AdminGuard } from './core/guard/admin.guard';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 
 const routes: Routes = [
@@ -33,6 +34,11 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadChildren: () => import('./features/analytics/analytics.module').then(m => m.AnalyticsModule)
+      },
+      {
+        path: 'admin',
+        canActivate: [AdminGuard],
+        loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule)
       }
     ]
   },

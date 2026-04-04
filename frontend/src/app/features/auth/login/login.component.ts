@@ -36,7 +36,11 @@ export class LoginComponent {
     this.authService.login(this.form.value).subscribe({
       next: () => {
         this.toast.success('Welcome back!');
-        this.router.navigate(['/dashboard']);
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.toast.error(err.error?.message || 'Login failed');
