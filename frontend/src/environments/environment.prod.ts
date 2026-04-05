@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-railway-app.up.railway.app'
+  apiUrl: 'https://jobpilot-dewg.onrender.com'
 };
