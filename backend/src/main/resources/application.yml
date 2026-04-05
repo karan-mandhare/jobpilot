@@ -58,4 +58,7 @@ app:
     api-key: 241359566162918
     api-secret: KASLFJSKFLOIURISFJDLAFLKSJFDLSJFLAKSJFD;LSKF930420980SJKFDL
 
-  frontend-url: http://localhost:4200
+
+logging:
+  level:
+    org.springframework.core.env: DEBUG
