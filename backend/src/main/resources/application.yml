@@ -1,14 +1,14 @@
 server:
-  port: ${PORT:8080}
+  port: 8080
 
 spring:
   application:
     name: jobpilot
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://ep-purple-moon-an3fofr2-pooler.c-6.us-east-1.aws.neon.tech:5432/jobpilot?sslmode=require
+    username: neondb_owner
+    password: npg_4SHUA3kdwvJD
     driver-class-name: org.postgresql.Driver
 
     hikari:
@@ -20,7 +20,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -32,10 +32,10 @@ spring:
       max-request-size: 10MB
 
   mail:
-    host: ${MAIL_HOST:smtp.gmail.com}
-    port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
+    host: smtp.gmail.com
+    port: 587
+    username: karan.mandhare.qnopy@gmail.com
+    password: vnevlsprwqwialmt
     properties:
       mail:
         smtp:
@@ -45,21 +45,17 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET}
-    expiration: ${JWT_EXPIRATION:86400000}
+    secret: 404E635266556A586E32723575387882F413F4428472B4B6250645367566B5970
+    expiration: 86400000
 
   ai:
-    api-key: ${AI_API_KEY}
-    api-url: ${AI_API_URL}
-    model: ${AI_MODEL}
+    api-key: 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
+    api-url: https://openrouter.ai/api/v1/chat/completions
+    model: stepfun/step-3.5-flash:free
 
   cloudinary:
-    cloud-name: ${CLOUDINARY_CLOUD_NAME}
-    api-key: ${CLOUDINARY_API_KEY}
-    api-secret: ${CLOUDINARY_API_SECRET}
+    cloud-name: ddosofdcr
+    api-key: 241359566162918
+    api-secret: KASLFJSKFLOIURISFJDLAFLKSJFDLSJFLAKSJFD;LSKF930420980SJKFDL
 
-  frontend-url: ${FRONTEND_URL}
-
-logging:
-  level:
-    org.springframework.core.env: DEBUG
+  frontend-url: http://localhost:4200
