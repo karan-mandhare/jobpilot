@@ -62,3 +62,7 @@ app:
 logging:
   level:
     org.springframework.core.env: DEBUG
+
+
+frontend:
+  url: http://localhost:4200
